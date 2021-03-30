@@ -46,14 +46,17 @@ const quotes =[
   }
 ]
 
-console.log(quotes)
 
 /***
  * `getRandomQuote` function
 ***/
-function getRandomQuote(){};
+function getRandomQuote(){
+const randomNumber= Math.floor(Math.random()*5)+1
+return quotes[randomNumber]
 
+};
 
+console.log(getRandomQuote())
 /***
  * `printQuote` function
 ***/
