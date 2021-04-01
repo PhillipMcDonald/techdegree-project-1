@@ -65,6 +65,9 @@ return quotes[randomNumber]
  * The second is named htmlString and holds the the information that will always be included in the htmlString
 ***/
 
+// For extra credit I used the setInterval() method to change my quote ever 20 sec
+setInterval(printQuote, 9000)
+
 function printQuote(){
 let objectNumber = getRandomQuote()
 let htmlString= `<p class="quote"> ${objectNumber.quote} </p>` +
@@ -75,7 +78,7 @@ if so it adds the year property to thr string*/
 
   if (objectNumber.citation === undefined & objectNumber.year != undefined){
   htmlString+= `<span class="citation"> ${objectNumber.year} </span></p>`}
-  
+
 /* this is statment checks if the citation property is present but not the year property 
 // if so its adds the citation property to the string 
  finally if both properties are present, it adds both properties to the string */
