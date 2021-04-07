@@ -3,20 +3,19 @@ Treehouse FSJS Techdegree:
 project 1 - A Random Quote Generator
 ******************************************/
 
-// For assistance: 
-  // Check the "Project Resources" section of the project instructions
-  // Reach out in your Slack community - https://treehouse-fsjs-102.slack.com/app_redirect?channel=chit-chat
+
 
 /*** 
- * `quotes` array 
- * contains 6 objects with 2 - 4 property values 
+ *  An array Named quotes
+ * Contains 6 objects with 2 - 4 property values 
+ * for extra credit I added a property named 'tag'
 ***/
 
 const quotes =[
 
   {
     quote: "You miss 100% of the shots you dont take.",
-    source: "Wayne Gretzkye",
+    source: "Wayne Gretzky",
     year: 1983
   },
   {
@@ -37,63 +36,94 @@ const quotes =[
   },
   {
     quote: "May the force be with you.",
-    source: "Obi Wan Kanobi",
+    source: "Obi-Wan Kenobi",
     citation: "Star Wars",
     year: 1977
   },
   {
     quote: "You only loose what you cling to",
     source: "Buddah",
+    tag: "Spiritual"
   }
 ]
 
 
 /***
- * `getRandomQuote` function 
- * uses Math.random() to choose a number between 0 and the number of object present in the array
- * returns the random object
+ * The `getRandomQuote` function 
+ * This function uses math.random to choose a random number that correspondes with an object within the array
+ * returns the raandom object, containing the quote
 ***/
+
+
 function getRandomQuote(){
-const randomNumber= Math.floor(Math.random()*quotes.length)
-return quotes[randomNumber]
+  const randomNumber= Math.floor(Math.random()*quotes.length)
+  return quotes[randomNumber]
 
 };
 
 /***
- * `printQuote` function, containing 2 variables, 
- * One named objectNumber that uses the getRandomQuote function to retrive a randm object from the array
- * The second is named htmlString and holds the the information that will always be included in the htmlString
+ * The `printQuote` function, containing 3 variables, 
+ * One named objectNumber that calls the getRandomQuote function to retrive a randm object (quote) from the array
+ * One named randomColor (for extra credit) that uses math.random to generate a number that then correspods to a color I used part of the code found at "https://css-tricks.com/snippets/javascript/random-hex-color/" to do this . 
+ * I then used code snippet from "https://css-tricks.com/snippets/javascript/random-hex-color/" to acsses the body element and change the background color to the corresponding number everytime the print quote function runs.
+ * The third is named htmlString and holds the the information that will always be included in the htmlString which is determinded by the if and else if statments below
 ***/
 
-// For extra credit I used the setInterval() method to change my quote ever 20 sec
-setInterval(printQuote, 9000)
+
+
 
 function printQuote(){
-let objectNumber = getRandomQuote()
-let htmlString= `<p class="quote"> ${objectNumber.quote} </p>` +
-`<p class="source"> ${objectNumber.source}`
+  // randomColor code snippet addapted from 'https://css-tricks.com/snippets/javascript/random-hex-color/' writen by Chris Coyier
+  let randomColor = Math.floor(Math.random()*16777215).toString(16);
+  let objectNumber = getRandomQuote()
+  let htmlString= `<p class="quote"> ${objectNumber.quote} </p>` +
+  `<p class="source"> ${objectNumber.source}`
 
-/* if statment that checks if object contains a year property  but No citation property. 
-if so it adds the year property to thr string*/
 
-  if (objectNumber.citation === undefined & objectNumber.year != undefined){
-  htmlString+= `<span class="citation"> ${objectNumber.year} </span></p>`}
 
-/* this is statment checks if the citation property is present but not the year property 
-// if so its adds the citation property to the string 
- finally if both properties are present, it adds both properties to the string */
+    if (objectNumber.citation === undefined & objectNumber.year != undefined & objectNumber.tag === undefined){
+      htmlString+= `<span class="citation"> ${objectNumber.year} </span></p>`
+    }
 
-  if (objectNumber.citation != undefined & objectNumber.year === undefined){
-    htmlString+= `<span class="citation"> ${objectNumber.citation} </span></p>`
-  } else if (objectNumber.citation != undefined & objectNumber.year != undefined){
-    htmlString += `<span class="citation"> ${objectNumber.citation} </span> <span class="citation"> ${objectNumber.year} </span> </p> `
-  }
+    if (objectNumber.citation === undefined & objectNumber.year === undefined & objectNumber.tag != undefined){
+      htmlString+= `<span class="citation"> ${objectNumber.tag} </span></p>`
+    }
 
+    if (objectNumber.citation != undefined & objectNumber.year === undefined & objectNumber.tag === undefined){
+      htmlString+= `<span class="citation"> ${objectNumber.citation} </span></p>`
+    }
+
+    if (objectNumber.citation === undefined & objectNumber.year != undefined & objectNumber.tag != undefined){
+      htmlString += `<span class="citation"> ${objectNumber.year} </span> <span class="citation"> ${objectNumber.tag} </span> </p> `
+    }
+
+    if (objectNumber.citation != undefined & objectNumber.year === undefined & objectNumber.tag != undefined){
+      htmlString += `<span class="citation"> ${objectNumber.citation} </span> <span class="citation"> ${objectNumber.tag} </span> </p> `
+    }
+
+      
+    if (objectNumber.citation != undefined & objectNumber.year != undefined & objectNumber.tag === undefined){
+      htmlString += `<span class="citation"> ${objectNumber.citation} </span> <span class="citation"> ${objectNumber.year} </span> </p> `
+
+
+    } else if (objectNumber.citation != undefined & objectNumber.year != undefined & objectNumber.tag != undefined){
+      htmlString += `<span class="citation"> ${objectNumber.citation} </span> <span class="citation"> ${objectNumber.year} </span> <span class="citation"> ${objectNumber.tag} </span> </p> `
+    }
+
+  // code snippet adapted from 'https://css-tricks.com/snippets/javascript/random-hex-color/' written by Chris Coyier  
+  document.body.style.backgroundColor = "#" + randomColor;
 
 
 return document.getElementById('quote-box').innerHTML = htmlString; 
 
+
+
 };
+
+
+// For extra credit I used the setInterval() method to change my quote ever 20 sec
+setInterval(printQuote, 9000)
+
 
 
 /***
@@ -102,5 +132,4 @@ return document.getElementById('quote-box').innerHTML = htmlString;
 ***/
 
 document.getElementById('load-quote').addEventListener("click", printQuote, false);
-
 
